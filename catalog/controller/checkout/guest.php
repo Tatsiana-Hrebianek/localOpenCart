@@ -95,6 +95,20 @@ class ControllerCheckoutGuest extends Controller {
 			$data['zone_id'] = '';
 		}
 
+		// Новые поля
+		if (isset($this->session->data['guest']['delivery_date'])) {
+			$data['delivery_date'] = $this->session->data['guest']['delivery_date'];
+		} else {
+			$data['delivery_date'] = '';
+		}
+
+		if (isset($this->session->data['guest']['pre_call'])) {
+			$data['pre_call'] = $this->session->data['guest']['pre_call'];
+		} else {
+			$data['pre_call'] = 0; // По умолчанию, если не установлено, то 0
+		}
+
+
 		$this->load->model('localisation/country');
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
@@ -202,6 +216,12 @@ class ControllerCheckoutGuest extends Controller {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 
+			// Валидация поля delivery_date
+			if (empty($this->request->post['delivery_date'])) {
+				$json['error']['delivery_date'] = $this->language->get('error_delivery_date');
+			}
+
+
 			// Customer Group
 			if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 				$customer_group_id = $this->request->post['customer_group_id'];
@@ -244,6 +264,14 @@ class ControllerCheckoutGuest extends Controller {
 			$this->session->data['guest']['lastname'] = $this->request->post['lastname'];
 			$this->session->data['guest']['email'] = $this->request->post['email'];
 			$this->session->data['guest']['telephone'] = $this->request->post['telephone'];
+			$this->session->data['guest']['delivery_date'] = $this->request->post['delivery_date'];
+			//$this->session->data['guest']['pre_call'] = isset($this->request->post['pre_call']) ? 1 : 0;
+
+			if (isset($this->request->post['pre_call'])) {
+				$this->session->data['guest']['pre_call'] = $this->request->post['pre_call'];
+			} else {
+				$this->session->data['guest']['pre_call'] = 0;
+			}
 
 			if (isset($this->request->post['custom_field']['account'])) {
 				$this->session->data['guest']['custom_field'] = $this->request->post['custom_field']['account'];
