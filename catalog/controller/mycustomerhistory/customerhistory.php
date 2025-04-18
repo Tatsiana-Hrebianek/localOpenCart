@@ -12,7 +12,7 @@ class ControllerMycustomerhistoryCustomerhistory extends Controller
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://f44551qi-beget-tech.retailcrm.ru/api/v5/customers/history?apiKey=dkpkrAfMs7fUs9bGZMkmGwsu1troobpl',
+                CURLOPT_URL => 'https://f44551qi-beget-tech.retailcrm.ru/api/v5/customers/history?apiKey=xxx',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
