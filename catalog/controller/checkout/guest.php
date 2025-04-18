@@ -47,6 +47,19 @@ class ControllerCheckoutGuest extends Controller {
 			$data['telephone'] = '';
 		}
 
+		// Новые поля
+		if (isset($this->session->data['guest']['delivery_date'])) {
+			$data['delivery_date'] = $this->session->data['guest']['delivery_date'];
+		} else {
+			$data['delivery_date'] = '';
+		}
+
+		if (isset($this->session->data['guest']['pre_call'])) {
+			$data['pre_call'] = 1;
+		} else {
+			$data['pre_call'] = 0; 
+		}
+
 		if (isset($this->session->data['payment_address']['company'])) {
 			$data['company'] = $this->session->data['payment_address']['company'];
 		} else {
@@ -95,18 +108,7 @@ class ControllerCheckoutGuest extends Controller {
 			$data['zone_id'] = '';
 		}
 
-		// Новые поля
-		if (isset($this->session->data['guest']['delivery_date'])) {
-			$data['delivery_date'] = $this->session->data['guest']['delivery_date'];
-		} else {
-			$data['delivery_date'] = '';
-		}
-
-		if (isset($this->session->data['guest']['pre_call'])) {
-			$data['pre_call'] = $this->session->data['guest']['pre_call'];
-		} else {
-			$data['pre_call'] = 0; // По умолчанию, если не установлено, то 0
-		}
+		
 
 
 		$this->load->model('localisation/country');
@@ -265,12 +267,11 @@ class ControllerCheckoutGuest extends Controller {
 			$this->session->data['guest']['email'] = $this->request->post['email'];
 			$this->session->data['guest']['telephone'] = $this->request->post['telephone'];
 			$this->session->data['guest']['delivery_date'] = $this->request->post['delivery_date'];
-			//$this->session->data['guest']['pre_call'] = isset($this->request->post['pre_call']) ? 1 : 0;
 
-			if (isset($this->request->post['pre_call'])) {
+			if (!empty($this->request->post['pre_call'])) {
 				$this->session->data['guest']['pre_call'] = $this->request->post['pre_call'];
 			} else {
-				$this->session->data['guest']['pre_call'] = 0;
+				$this->session->data['guest']['pre_call'] = false;
 			}
 
 			if (isset($this->request->post['custom_field']['account'])) {

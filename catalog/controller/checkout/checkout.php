@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 class ControllerCheckoutCheckout extends Controller {
 	public function index() {
 		// Validate cart has products and has stock.
@@ -92,7 +96,7 @@ class ControllerCheckoutCheckout extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		$this->response->setOutput($this->load->view('checkout/checkout', $data));
+		$this->response->setOutput($this->load->view('checkout/checkout', $data));		
 	}
 
 	public function country() {

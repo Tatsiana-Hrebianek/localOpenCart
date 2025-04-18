@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 class ControllerCheckoutConfirm extends Controller {
 	public function index() {
 		$redirect = '';
@@ -133,6 +136,8 @@ class ControllerCheckoutConfirm extends Controller {
 				$order_data['lastname'] = $this->session->data['guest']['lastname'];
 				$order_data['email'] = $this->session->data['guest']['email'];
 				$order_data['telephone'] = $this->session->data['guest']['telephone'];
+				$order_data['delivery_date'] = $this->session->data['guest']['delivery_date'];
+				$order_data['pre_call'] = $this->session->data['guest']['pre_call'];
 				$order_data['custom_field'] = $this->session->data['guest']['custom_field'];
 			}
 
@@ -413,5 +418,6 @@ class ControllerCheckoutConfirm extends Controller {
 		}
 
 		$this->response->setOutput($this->load->view('checkout/confirm', $data));
+		var_dump($order_data);
 	}
 }
